@@ -1,23 +1,36 @@
 import React, { useContext, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { APi_KEY, BASE_URL } from "../const";
+import { API_KEY, BASE_URL } from "../const";
+import useForceUpdate from "../hooks/useForceUpdate";
 import { Context } from "../index";
 
 const WeatherDisplay = ({ name }) => {
-  const customRedux = useContext(Context);
-  const state = customRedux.getState();
+  const store = useContext(Context);
+  const state = store.getState();
+  const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    const unsubscribeForForceUpdate = store.subscribe(forceUpdate);
+    const unsubscribeForConsoleLog = store.subscribe((state) => console.log(state));
+
+    return () => {
+      unsubscribeForForceUpdate();
+      unsubscribeForConsoleLog();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const fetchWeather = async () => {
-      customRedux.dispatch({ 
+      store.dispatch({ 
         type: "SET_LOADED",
         payload: false,
       });
       const response = await fetch(
-        `${BASE_URL}${name}&appid=${APi_KEY}&units=imperial`
+        `${BASE_URL}${name}&appid=${API_KEY}&units=imperial`
       );
       const data = await response.json();
-      customRedux.dispatch({ 
+      store.dispatch({ 
         type: "FETCH_WEATHER",
         payload: {
           main: data.main,

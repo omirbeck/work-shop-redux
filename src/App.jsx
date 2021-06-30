@@ -28,7 +28,6 @@ const App = () => {
               {PLACES.map(({ name }, index) => (
                 <NavItem 
                   key={index}
-                  eventKey={index}
                   onClick={() => setActivePlace(index)}
                 >
                   <Nav.Link eventKey={index}>

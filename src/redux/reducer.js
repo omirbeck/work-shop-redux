@@ -1,11 +1,4 @@
-import { FETCH_WEATHER, SET_LOADED } from "./actions";
-
-// const initialState = {
-//   main: {},
-//   name: null,
-//   weather: [],
-//   isLoading: false,
-// }
+import { FETCH_WEATHER, SET_LOADED, SET_SHOW_WEATHER,  } from "./actions";
 
 const reducer = (state, action) => {
   switch (action.type) {

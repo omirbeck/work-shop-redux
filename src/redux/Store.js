@@ -2,9 +2,8 @@
 class Store {
   constructor(callback, initialState) {
     if (typeof callback !== 'function') {
-      throw Error('You should put a function reducer')
+      throw Error("You should use a function reducer")
     }
-    // this.initialState = null;
     this.callback = callback;
     this.action = false;
     this.state = callback(initialState, this.action);
@@ -20,7 +19,7 @@ class Store {
       this.state = this.callback(this.state, action);
       this.subscribers.forEach((subscribe) => subscribe(this.state))
     } else {
-      throw Error("Action should be has type");
+      throw Error("Action should have a type");
     }
   }
 
